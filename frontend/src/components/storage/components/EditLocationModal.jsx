@@ -237,6 +237,24 @@ export default function EditLocationModal({
           />
         )}
 
+        {/* FIX #4311: a device without a type leaves Save silently
+            disabled — tell the user why instead of a dead button. */}
+        {form && level === "device" && !form.type && (
+          <InlineNotification
+            kind="warning"
+            lowContrast
+            hideCloseButton
+            title={intl.formatMessage({
+              id: "label.warning",
+              defaultMessage: "Warning",
+            })}
+            subtitle={intl.formatMessage({
+              id: "storage.edit.deviceTypeRequired",
+              defaultMessage: "Select a device type to enable Save",
+            })}
+          />
+        )}
+
         {loading && (
           <InlineLoading
             description={intl.formatMessage({
